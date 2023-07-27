@@ -1,0 +1,6 @@
+Flask
+Flask-Cors
+gevent
+scrapy 
+beautifulsoup4 
+googlesearch-python
