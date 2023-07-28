@@ -1,14 +1,14 @@
 import scrapy
 from bs4 import BeautifulSoup
 import json
+import os
 import re  # Thêm thư viện re để sử dụng biểu thức chính quy
 
 class MySpider(scrapy.Spider):
     name = 'my_spider'
-
     def start_requests(self):
         # Replace 'google_search.json' with the output file from the GoogleSearchSpider
-        with open('google_search.json', 'r', encoding='utf-8') as f:
+        with open(os.getcwd()+'/my_project/google_search.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
 
         for entry in data:
