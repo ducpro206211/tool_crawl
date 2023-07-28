@@ -13,22 +13,18 @@ from flask import (
 app = Flask(__name__)
 CORS(app)
 def run_spiders(prompt):
-    # Đường dẫn đến thư mục chứa project Scrapy của bạn
-    scrapy_project_path = "my_project"
-
-    # Thay đổi thư mục làm việc hiện tại đến thư mục chứa project Scrapy
-    os.chdir(scrapy_project_path)
     # Xoá dữ liệu trong file "google_search.json" và "output.json" trước khi chạy lại spider với prompt mới
-    with open('google_search.json', 'w') as f:
+    with open('./my_project/google_search.json', 'w') as f:
         f.write('')
-    with open('output.json', 'w') as f:
+    with open('./my_project/output.json', 'w') as f:
         f.write('')
     # Thực thi Spider "GoogleSearchSpider" với prompt như đầu vào
-    google_search_cmd = f'scrapy crawl google_search -a prompt="{prompt}" -o google_search.json'
+    project_directory = "./my_project"
+    google_search_cmd = f'cd {project_directory} && scrapy crawl google_search -a prompt="{prompt}" -o google_search.json'
     os.system(google_search_cmd)
 
     # Thực thi Spider "MySpider" với input_file là "google_search.json"
-    my_spider_cmd = 'scrapy crawl my_spider -a input_file=google_search.json -o output.json'
+    my_spider_cmd = f'cd {project_directory} && scrapy crawl my_spider -a input_file=google_search.json -o output.json'
     os.system(my_spider_cmd)
 def load_json_from_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -45,9 +41,8 @@ def search_and_return_result():
         if prompt:
             # Chạy hàm run_spiders với prompt nhận được
             run_spiders(prompt)
-
             # Đọc dữ liệu từ file output.json
-            output_data = load_json_from_file('output.json')
+            output_data = load_json_from_file('./my_project/output.json')
 
             return jsonify(output_data)
 
