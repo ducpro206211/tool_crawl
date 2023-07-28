@@ -22,7 +22,7 @@ def run_spiders(prompt):
     project_directory = "./my_project"
     google_search_cmd = f'cd {project_directory} && scrapy crawl google_search -a prompt="{prompt}" -o google_search.json'
     os.system(google_search_cmd)
-
+    print(os.getcwd())
     # Thực thi Spider "MySpider" với input_file là "google_search.json"
     my_spider_cmd = f'cd {project_directory} && scrapy crawl my_spider -a input_file=google_search.json -o output.json'
     os.system(my_spider_cmd)
@@ -37,7 +37,6 @@ def search_and_return_result():
 
         # Lấy nội dung của trường "prompt" từ JSON
         prompt = data.get('prompt', '')
-
         if prompt:
             # Chạy hàm run_spiders với prompt nhận được
             run_spiders(prompt)

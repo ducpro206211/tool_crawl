@@ -7,8 +7,9 @@ import re  # Thêm thư viện re để sử dụng biểu thức chính quy
 class MySpider(scrapy.Spider):
     name = 'my_spider'
     def start_requests(self):
+        print("------------------------------",os.getcwd())
         # Replace 'google_search.json' with the output file from the GoogleSearchSpider
-        with open(os.getcwd()+'/my_project/google_search.json', 'r', encoding='utf-8') as f:
+        with open('./google_search.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
 
         for entry in data:
@@ -45,7 +46,7 @@ class MySpider(scrapy.Spider):
         }
 
         # Lưu kết quả vào tệp JSON
-        with open('output.json', 'a', encoding='utf-8') as f:
+        with open('./output.json', 'a', encoding='utf-8') as f:
             json.dump(result, f, ensure_ascii=False)
             f.write('\n')
 
